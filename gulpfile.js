@@ -9,36 +9,36 @@ rename = require("gulp-rename");
 
 
 gulp.task('sass', function () {
-    return gulp.src('app/scss/style.scss')
+    return gulp.src('/scss/style.scss')
         .pipe(sass({ outputStyle: 'compressed' }))        
         .pipe(rename({ suffix: '.min' }))
         .pipe(autoPrefixer({
             overrideBrowserslist: ['last 8 versions'],
         }))
-        .pipe(gulp.dest('app/css'))
+        .pipe(gulp.dest('/css'))
         .pipe(browserSync.reload({ stream: true }))
 });
 
 gulp.task('html', function () {
-    return gulp.src('app/*.html')
+    return gulp.src('/*.html')
         .pipe(browserSync.reload({ stream: true }))
 });
 
 gulp.task('js', function () {
-    return gulp.src('app/js/*.js')
+    return gulp.src('/js/*.js')
         .pipe(browserSync.reload({ stream: true }))
 });
 
 gulp.task('watch', function () {
-    gulp.watch('app/scss/style.scss', gulp.parallel('sass'))
-    gulp.watch('app/*.html', gulp.parallel('html'))
-    gulp.watch('app/js/*.js', gulp.parallel('js'))
+    gulp.watch('/scss/style.scss', gulp.parallel('sass'))
+    gulp.watch('/*.html', gulp.parallel('html'))
+    gulp.watch('/js/*.js', gulp.parallel('js'))
 });
 
 gulp.task('browser-sync', function () {
     browserSync.init({
         server: {
-            baseDir: "app/"
+            baseDir: "/"
         }
     });
 });
@@ -51,7 +51,7 @@ gulp.task('style',function(){
     ])
     .pipe(concat('libs.min.css'))
     .pipe(cssmin())
-    .pipe(gulp.dest('app/css'))    
+    .pipe(gulp.dest('/css'))    
 });
 
 gulp.task('script',function(){
@@ -61,7 +61,7 @@ gulp.task('script',function(){
     ])
     .pipe(concat('libs.min.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('app/js'))    
+    .pipe(gulp.dest('/js'))    
 });
 
 gulp.task('default', gulp.parallel('sass', 'watch', 'browser-sync','script','style'))
